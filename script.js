@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const charModal = document.getElementById("character-modal");
   const closeChar = document.getElementById("close-character");
 
-  /* Boot Messages */
   const messagePool = [
     "[BOOT] Initializing profile system...",
     "[OK] Loading character stats...",
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return [intro, ...shuffled.slice(0, 3), outro];
   }
 
-  /* Start sequence */
   function startProfile() {
     if (profile.classList.contains("active")) return;
 
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const lines = document.querySelectorAll(".line");
 
-      // Animate lines sequentially
       lines.forEach((line, index) => {
         setTimeout(() => {
           line.style.opacity = "1";
@@ -64,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
           setTimeout(() => line.classList.add("done"), 1500);
 
-          // When last line finishes
           if (index === lines.length - 1) {
             setTimeout(() => {
               terminal.style.transition = "opacity 1s ease";
@@ -93,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Enter") startProfile();
   });
 
-  /* Particle Background */
   function initParticles() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -125,11 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
-  /* Character Modal Logic */
   charPanel.addEventListener("click", () => {
     charModal.classList.add("active");
-
-    // animate bars filling
     document.querySelectorAll(".bar .fill").forEach(bar => {
       const percent = bar.style.getPropertyValue("--percent");
       bar.style.width = percent;
@@ -138,10 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeChar.addEventListener("click", () => {
     charModal.classList.remove("active");
-
-    // reset bars
-    document.querySelectorAll(".bar .fill").forEach(bar => {
-      bar.style.width = "0";
-    });
+    document.querySelectorAll(".bar .fill").forEach(bar => bar.style.width = "0");
   });
 });

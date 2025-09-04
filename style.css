@@ -91,7 +91,7 @@ body {
   transform: scale(0.9) rotateX(5deg);
   transition: all 0.6s ease;
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-  z-index: 1;
+  z-index: 2; /* above canvas */
 }
 .panel.flicker {
   opacity: 1;
@@ -158,22 +158,19 @@ body {
   height: 20px;
   position: relative;
 }
-
 .bar .fill {
   height: 100%;
-  width: 0; /* Start empty */
+  width: 0;
   transition: width 1.5s ease;
 }
-
 .bar.health .fill {
   background: linear-gradient(90deg, #ff3b3b, #ff8080);
 }
-
 .bar.mana .fill {
   background: linear-gradient(90deg, #3b3bff, #8080ff);
 }
 
-
+/* Close Button */
 #close-character {
   margin-top: 20px;
   padding: 10px 20px;
