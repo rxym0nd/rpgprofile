@@ -1,148 +1,91 @@
-/* General setup */
 body {
   margin: 0;
-  padding: 0;
   font-family: monospace;
   background: black;
-  color: #0ff;
+  color: #00ffcc;
+  overflow: hidden;
+}
+
+/* Landing */
+#landing {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-/* Landing screen */
-#landing {
-  text-align: center;
-}
-#landing h1 {
-  margin-bottom: 20px;
+  transition: opacity 1s ease;
 }
 #start-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  background: #0ff;
+  margin-top: 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  font-size: 18px;
+  background: #00ffcc;
+  color: black;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: transform 0.2s ease;
 }
 #start-btn:hover {
-  background: #0cc;
+  transform: scale(1.1);
 }
 
-/* Profile screen */
+/* Profile Terminal */
 #profile {
   display: none;
-  width: 80%;
-  max-width: 600px;
+  height: 100vh;
+  padding: 20px;
 }
 #profile.active {
   display: block;
 }
-
-/* Terminal text lines */
 .line {
   opacity: 0;
   white-space: nowrap;
   overflow: hidden;
-  border-right: 2px solid #0ff; /* typing cursor */
-  width: 0;
-  display: inline-block;
+  border-right: 2px solid #00ffcc;
 }
-
-/* Typing animation */
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-/* Blinking cursor while typing */
-@keyframes blink {
-  0%, 50% { border-color: #0ff; }
-  51%, 100% { border-color: transparent; }
-}
-
-/* Remove cursor once line is done */
 .line.done {
   border-right: none;
 }
 
-/* Dashboard Layout */
+/* Typing + blinking cursor */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Dashboard Grid */
 #dashboard {
-  display: none; /* hidden until boot finishes */
-  width: 90%;
-  height: 90%;
-  margin: 20px auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 per row */
-  grid-template-rows: 1fr 1fr;
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  padding: 40px;
 }
-
-/* Panels */
 .panel {
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid #00ff99;
-  border-radius: 10px;
-  padding: 15px;
-  color: #00ff99;
-  font-family: monospace;
-  overflow: auto;
-  opacity: 0; /* hidden until flicker anim */
+  background: rgba(0, 255, 204, 0.1);
+  border: 1px solid #00ffcc;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  font-size: 20px;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.6s ease;
 }
-
-/* Panel Titles */
-.panel h2 {
-  margin-top: 0;
-  color: #fff;
-  border-bottom: 1px solid #00ff99;
-  padding-bottom: 5px;
+.panel.flicker {
+  opacity: 1;
+  transform: scale(1);
+  animation: flicker 0.6s linear;
 }
-
-/* Avatar placeholder */
-.avatar {
-  width: 80px;
-  height: 80px;
-  background: #00ff99;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-/* XP bar */
-.xp-bar {
-  width: 100%;
-  height: 10px;
-  background: #333;
-  border: 1px solid #00ff99;
-  margin-top: 5px;
-  border-radius: 5px;
-}
-
-.xp-fill {
-  width: 40%; /* starting point */
-  height: 100%;
-  background: #00ff99;
-  border-radius: 5px;
-}
-
-/* Flicker animation */
-@keyframes crtFlicker {
-  0%   { opacity: 0; }
-  10%  { opacity: 1; }
-  20%  { opacity: 0.3; }
-  30%  { opacity: 1; }
-  40%  { opacity: 0.6; }
-  50%  { opacity: 1; }
-  60%  { opacity: 0.4; }
-  70%  { opacity: 1; }
+@keyframes flicker {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  40% { opacity: 0.3; }
+  60% { opacity: 1; }
+  80% { opacity: 0.7; }
   100% { opacity: 1; }
-}
-
-.flicker {
-  animation: crtFlicker 1s linear forwards;
-}
-
-#dashboard {
-  display: none; /* hidden until boot finishes */
 }
