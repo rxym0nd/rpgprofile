@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
               setTimeout(() => {
                 terminal.remove();
                 dashboard.style.display = "grid";
+                dashboard.style.position = "relative";
 
                 const panels = document.querySelectorAll(".panel");
                 panels.forEach((panel, i) => {

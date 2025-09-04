@@ -60,12 +60,12 @@ body {
 /* Dashboard */
 #dashboard {
   display: none;
+  position: relative;
+  z-index: 1;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   padding: 40px;
   height: 100vh;
-  position: relative;
-  z-index: 1;
 }
 
 /* Background Particles Layer */
