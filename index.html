@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RPG Profile</title>
+  <title>RPG Profile — Raymond Ochieng</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,8 +16,8 @@
   <!-- Landing Page -->
   <section id="landing" class="screen center">
     <div class="landing-inner">
-      <h1>Welcome to the RPG World</h1>
-      <button id="enterBtn" class="btn-primary" aria-label="Enter Game">Enter Game</button>
+      <h1>Welcome to the RPG Profile</h1>
+      <button id="enterBtn" class="btn-primary" aria-label="Enter Game" autofocus>Enter</button>
       <p class="hint">Press Enter ↵</p>
     </div>
   </section>
@@ -37,92 +37,123 @@
 
   <!-- Dashboard -->
   <section id="dashboard" class="screen hidden" aria-label="Dashboard">
-    <!-- Particle background (non-blocking) -->
     <canvas id="particles" class="particles" aria-hidden="true"></canvas>
 
     <div class="grid" role="region" aria-label="Main panels">
-      <article class="panel" data-panel="character" tabindex="0" aria-label="Open Character">
+      <article class="panel" data-panel="character" tabindex="0" aria-label="Open Profile">
         <div class="panel-icon">🎭</div>
-        <h2>Character</h2>
+        <h2>About</h2>
+        <p class="mini-list">View my bio & contact</p>
       </article>
 
-      <article class="panel" data-panel="stats" tabindex="0" aria-label="View Stats">
+      <article class="panel" data-panel="stats" tabindex="0" aria-label="View Skills">
         <div class="panel-icon">⚔️</div>
-        <h2>Stats</h2>
-        <ul class="mini-list">
-          <li>STR: 14</li>
-          <li>DEX: 12</li>
-          <li>INT: 16</li>
-        </ul>
+        <h2>Skills</h2>
+        <ul class="mini-list" id="skillsPreview"><!-- populated by JS --></ul>
       </article>
 
       <article class="panel" data-panel="achievements" tabindex="0" aria-label="View Achievements">
         <div class="panel-icon">🏆</div>
         <h2>Achievements</h2>
-        <ul class="mini-list">
-          <li>First Blood</li>
-          <li>Explorer</li>
-          <li>Master Crafter</li>
-        </ul>
+        <p class="mini-list">Real-world milestones</p>
       </article>
 
-      <article class="panel" data-panel="quests" tabindex="0" aria-label="View Quests">
+      <article class="panel" data-panel="quests" tabindex="0" aria-label="View Goals">
         <div class="panel-icon">📜</div>
-        <h2>Quests</h2>
-        <ul class="mini-list">
-          <li>Clear the Ember Caves</li>
-          <li>Deliver Phoenix Feather</li>
-          <li>Defend Ember Park</li>
-        </ul>
+        <h2>Goals</h2>
+        <p class="mini-list">Current projects & goals</p>
       </article>
     </div>
   </section>
 
-  <!-- Character Modal -->
+  <!-- Character / About Modal -->
   <div id="characterModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="charTitle" aria-hidden="true">
     <div class="modal-content" role="document">
       <button class="modal-close btn-ghost" id="closeModal" aria-label="Back">← Back</button>
 
       <div class="modal-body">
         <div class="avatar-wrap">
-          <!-- Replace with your avatar if desired -->
-          <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=512&auto=format&fit=crop" alt="Character Avatar" class="avatar" />
+          <img id="avatarImg" src="" alt="Avatar" class="avatar" />
         </div>
 
         <div class="char-info">
-          <h3 id="charTitle">Raymond the Flame Warden</h3>
-          <p class="subtle">Class: Battlemage • Level: 27 • XP: 48,920</p>
+          <h3 id="charTitle"></h3>
+          <p class="subtle" id="charSubtitle"></p>
 
           <div class="bar">
             <div class="bar-label">
-              <span>Health</span><span id="hpVal">0%</span>
+              <span>Profile Completion</span><span id="profilePct">0%</span>
             </div>
-            <div class="bar-track"><div class="bar-fill hp" style="width:0%"></div></div>
+            <div class="bar-track"><div class="bar-fill hp" id="profileBar" style="width:0%"></div></div>
           </div>
 
-          <div class="bar">
-            <div class="bar-label">
-              <span>Mana</span><span id="mpVal">0%</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill mp" style="width:0%"></div></div>
-          </div>
+          <div class="stats-block" id="traitsGrid"><!-- traits filled by JS --></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop"></div>
+  </div>
 
-          <div class="stats-block">
-            <div><span class="k">STR</span> 14</div>
-            <div><span class="k">DEX</span> 12</div>
-            <div><span class="k">INT</span> 16</div>
-            <div><span class="k">VIT</span> 15</div>
-            <div><span class="k">WIS</span> 13</div>
-            <div><span class="k">LCK</span> 11</div>
+  <!-- Stats Modal -->
+  <div id="statsModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-close">
+        <button id="closeStatsModal" class="btn-ghost">Back</button>
+      </div>
+      <div class="modal-body">
+        <div class="char-info">
+          <h3>Core Skills</h3>
+          <p class="subtle">A snapshot of my professional & personal strengths</p>
+
+          <div class="stats-block" id="statsGrid"><!-- populated by JS --></div>
+
+          <div class="bar" style="margin-top:18px;">
+            <div class="bar-label"><span>XP Progress</span><span id="xpVal">0%</span></div>
+            <div class="bar-track"><div class="bar-fill xp" id="xpFill"></div></div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Backdrop -->
-    <div class="modal-backdrop" aria-hidden="true"></div>
   </div>
 
-  <!-- Script: placed at end so DOM is ready -->
+  <!-- Achievements Modal -->
+  <div id="achievementsModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-close">
+        <button id="closeAchievementsModal" class="btn-ghost">Back</button>
+      </div>
+      <div class="modal-body">
+        <div class="char-info">
+          <h3>Achievements</h3>
+          <p class="subtle">Real-life milestones and certificates</p>
+
+          <ul class="achievements-list" id="achievementsList"><!-- populated by JS --></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quests / Goals Modal -->
+  <div id="questsModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-close">
+        <button id="closeQuestsModal" class="btn-ghost">Back</button>
+      </div>
+      <div class="modal-body">
+        <div class="char-info">
+          <h3>Goals & Projects</h3>
+          <p class="subtle">Short-term tasks and longer-term ambitions</p>
+
+          <ul class="quests-list" id="questsList"><!-- populated by JS --></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
