@@ -2,52 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Modern RPG Profile</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>RPG Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Landing -->
-  <div id="landing">
-    <h1>Welcome to the RPG World</h1>
-    <button id="start-btn">Enter Game</button>
-  </div>
+  <!-- Landing Page -->
+  <section id="landing" class="screen center">
+    <div class="landing-inner">
+      <h1>Welcome to the RPG World</h1>
+      <button id="enterBtn" class="btn-primary" aria-label="Enter Game">
+        Enter Game
+      </button>
+      <p class="hint">Press Enter ↵</p>
+    </div>
+  </section>
 
   <!-- Profile Terminal -->
-  <div id="profile">
-    <div id="terminal"></div>
-  </div>
+  <section id="terminal" class="screen hidden" aria-live="polite">
+    <div class="terminal-inner">
+      <div class="terminal-header">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <span class="term-title">/dev/profile – boot log</span>
+      </div>
+      <pre id="terminalOutput" class="terminal-output" aria-label="Boot Log"></pre>
+    </div>
+  </section>
 
   <!-- Dashboard -->
-  <div id="dashboard">
-    <canvas id="particles"></canvas>
-    <div class="panel" id="character-panel">🎭 Character</div>
-    <div class="panel">⚔️ Stats</div>
-    <div class="panel">🏆 Achievements</div>
-    <div class="panel">📜 Quests</div>
-  </div>
+  <section id="dashboard" class="screen hidden">
+    <!-- Particle background (non-blocking) -->
+    <canvas id="particles" class="particles" aria-hidden="true"></canvas>
+
+    <div class="grid">
+      <article class="panel" data-panel="character" tabindex="0" aria-label="Open Character">
+        <div class="panel-icon">🎭</div>
+        <h2>Character</h2>
+      </article>
+
+      <article class="panel" data-panel="stats" tabindex="0" aria-label="View Stats">
+        <div class="panel-icon">⚔️</div>
+        <h2>Stats</h2>
+        <ul class="mini-list">
+          <li>STR: 14</li>
+          <li>DEX: 12</li>
+          <li>INT: 16</li>
+        </ul>
+      </article>
+
+      <article class="panel" data-panel="achievements" tabindex="0" aria-label="View Achievements">
+        <div class="panel-icon">🏆</div>
+        <h2>Achievements</h2>
+        <ul class="mini-list">
+          <li>First Blood</li>
+          <li>Explorer</li>
+          <li>Master Crafter</li>
+        </ul>
+      </article>
+
+      <article class="panel" data-panel="quests" tabindex="0" aria-label="View Quests">
+        <div class="panel-icon">📜</div>
+        <h2>Quests</h2>
+        <ul class="mini-list">
+          <li>Clear the Ember Caves</li>
+          <li>Deliver Phoenix Feather</li>
+          <li>Defend Ember Park</li>
+        </ul>
+      </article>
+    </div>
+  </section>
 
   <!-- Character Modal -->
-  <div id="character-modal" class="modal">
+  <div id="characterModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="charTitle">
     <div class="modal-content">
-      <h2>🎭 Character Sheet</h2>
-      <img src="https://i.ibb.co/r2zvQyM/avatar.png" alt="Avatar" class="avatar"/>
-      <p><strong>Class:</strong> Cyber Mage</p>
-      <p><strong>Level:</strong> 7</p>
-      <p><strong>XP:</strong> 1450 / 2000</p>
+      <button class="modal-close btn-ghost" id="closeModal" aria-label="Back">← Back</button>
 
-      <div class="bar health">
-        <div class="fill" style="--percent: 75%"></div>
+      <div class="modal-body">
+        <div class="avatar-wrap">
+          <!-- Replace src with your own avatar if you like -->
+          <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=512&auto=format&fit=crop" alt="Character Avatar" class="avatar" />
+        </div>
+
+        <div class="char-info">
+          <h3 id="charTitle">Raymond the Flame Warden</h3>
+          <p class="subtle">Class: Battlemage • Level: 27 • XP: 48,920</p>
+
+          <div class="bar">
+            <div class="bar-label">
+              <span>Health</span><span id="hpVal">0%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill hp"></div></div>
+          </div>
+
+          <div class="bar">
+            <div class="bar-label">
+              <span>Mana</span><span id="mpVal">0%</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill mp"></div></div>
+          </div>
+
+          <div class="stats-block">
+            <div><span class="k">STR</span> 14</div>
+            <div><span class="k">DEX</span> 12</div>
+            <div><span class="k">INT</span> 16</div>
+            <div><span class="k">VIT</span> 15</div>
+            <div><span class="k">WIS</span> 13</div>
+            <div><span class="k">LCK</span> 11</div>
+          </div>
+        </div>
       </div>
-      <p>Health: 75%</p>
-
-      <div class="bar mana">
-        <div class="fill" style="--percent: 50%"></div>
-      </div>
-      <p>Mana: 50%</p>
-
-      <button id="close-character">Back</button>
     </div>
+    <!-- Backdrop -->
+    <div class="modal-backdrop"></div>
   </div>
 
   <script src="script.js"></script>
