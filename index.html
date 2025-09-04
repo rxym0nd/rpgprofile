@@ -1,139 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RPG Profile — Raymond Ochieng</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raymond's Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Landing Page -->
-  <section id="landing" class="screen center">
-    <canvas id="landingParticles" aria-hidden="true"></canvas>
-    <div class="landing-inner">
-      <h1 class="title">Raymond Ochieng</h1>
-      <p class="subtitle">Software Engineer</p>
-      <button id="enterBtn" class="btn-start" aria-label="Enter Game" autofocus>▶ Enter</button>
-      <p class="hint">Press Enter ↵</p>
+  <!-- Landing Screen -->
+  <div id="landing" class="screen">
+    <canvas id="landingParticles"></canvas>
+    <div class="landing-inner center">
+      <div class="title">Raymond's Nexus</div>
+      <div class="subtitle">Your life, your quests</div>
+      <button id="enterBtn" class="btn-start">ENTER</button>
+      <div class="hint">Press ENTER or click the button</div>
     </div>
-  </section>
+  </div>
 
-  <!-- Profile Terminal -->
-  <section id="terminal" class="screen hidden" aria-live="polite">
+  <!-- Terminal Screen -->
+  <div id="terminal" class="screen hidden center">
     <div class="terminal-inner">
       <div class="terminal-header">
-        <div class="dot red"></div>
-        <div class="dot yellow"></div>
-        <div class="dot green"></div>
-        <span class="term-title">/dev/profile – boot log</span>
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
       </div>
-      <pre id="terminalOutput" class="terminal-output"></pre>
+      <div id="terminalOutput" class="terminal-output"></div>
     </div>
-  </section>
+  </div>
 
   <!-- Dashboard -->
-  <section id="dashboard" class="screen hidden" aria-label="Dashboard">
-    <canvas id="particles" class="particles" aria-hidden="true"></canvas>
-    <div class="grid">
-      <article class="panel" data-panel="character">
-        <div class="panel-icon">🎭</div>
-        <h2>About</h2>
-        <p class="mini-list">View my bio & contact</p>
-      </article>
-      <article class="panel" data-panel="stats">
-        <div class="panel-icon">⚔️</div>
-        <h2>Skills</h2>
-        <ul class="mini-list" id="skillsPreview"></ul>
-      </article>
-      <article class="panel" data-panel="achievements">
-        <div class="panel-icon">🏆</div>
-        <h2>Achievements</h2>
-        <p class="mini-list">Real-world milestones</p>
-      </article>
-      <article class="panel" data-panel="quests">
-        <div class="panel-icon">📜</div>
-        <h2>Goals</h2>
-        <p class="mini-list">Current projects & goals</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- Character / About Modal -->
-  <div id="characterModal" class="modal hidden">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content">
-      <button id="closeModal" class="btn-ghost">← Back</button>
-      <div class="modal-body">
-        <div class="avatar-wrap">
-          <img id="avatarImg" src="https://api.dicebear.com/7.x/pixel-art/svg?seed=Raymond" alt="Avatar" class="avatar" />
-        </div>
-        <div class="char-info">
-          <h3 id="charTitle">Raymond Ochieng</h3>
-          <p class="subtle">Software Engineer</p>
-          <div class="bar">
-            <div class="bar-label"><span>Profile Completion</span><span id="profilePct">100%</span></div>
-            <div class="bar-track"><div class="bar-fill hp" id="profileBar"></div></div>
-          </div>
-          <div class="stats-block" id="traitsGrid"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stats Modal -->
-  <div id="statsModal" class="modal hidden">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content">
-      <button id="closeStatsModal" class="btn-ghost">← Back</button>
-      <div class="modal-body">
-        <div class="char-info">
-          <h3>Core Skills</h3>
-          <p class="subtle">Professional & personal strengths</p>
-          <div class="stats-block" id="statsGrid"></div>
-          <div class="bar">
-            <div class="bar-label"><span>XP Progress</span><span id="xpVal">0%</span></div>
-            <div class="bar-track"><div class="bar-fill xp" id="xpFill"></div></div>
+  <div id="dashboard" class="screen hidden">
+    <div class="dashboard-container">
+      <!-- User Profile -->
+      <div class="profile-card center">
+        <img src="avatar.png" alt="Avatar" class="avatar">
+        <h2 id="username">Raymond</h2>
+        <div class="bar">
+          <div class="bar-track">
+            <div id="profileBar" class="bar-fill hp"></div>
           </div>
         </div>
       </div>
+
+      <!-- XP / Level -->
+      <div class="xp-card center">
+        <h3>Level <span id="levelVal">1</span></h3>
+        <div class="bar">
+          <div class="bar-track">
+            <div id="globalXPBar" class="bar-fill xp"></div>
+          </div>
+        </div>
+        <p><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</p>
+      </div>
+
+      <!-- Grid Panels -->
+      <div class="grid">
+        <div class="panel" data-panel="traits">
+          <div class="panel-icon">🧬</div>
+          <div>Traits</div>
+        </div>
+        <div class="panel" data-panel="skills">
+          <div class="panel-icon">💻</div>
+          <div>Skills</div>
+        </div>
+        <div class="panel" data-panel="achievements">
+          <div class="panel-icon">🏆</div>
+          <div>Achievements</div>
+        </div>
+        <div class="panel" data-panel="questsLife">
+          <div class="panel-icon">📜</div>
+          <div>Quests</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievement Popup Container -->
+    <div id="achievementPopupContainer" class="achievement-container"></div>
+  </div>
+
+  <!-- Modals -->
+  <div id="traitsModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button id="closeTraitsModal" class="btn-ghost">Close</button>
+      <h2>Traits</h2>
+      <div id="traitsGrid" class="stats-block"></div>
     </div>
   </div>
 
-  <!-- Achievements Modal -->
+  <div id="skillsModal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button id="closeSkillsModal" class="btn-ghost">Close</button>
+      <h2>Skills</h2>
+      <ul id="skillsPreview"></ul>
+    </div>
+  </div>
+
   <div id="achievementsModal" class="modal hidden">
     <div class="modal-backdrop"></div>
     <div class="modal-content">
-      <button id="closeAchievementsModal" class="btn-ghost">← Back</button>
-      <div class="modal-body">
-        <div class="char-info">
-          <h3>Achievements</h3>
-          <ul class="achievements-list" id="achievementsList"></ul>
-        </div>
-      </div>
+      <button id="closeAchievementsModal" class="btn-ghost">Close</button>
+      <h2>Achievements</h2>
+      <ul id="achievementsList"></ul>
     </div>
   </div>
 
-  <!-- Quests Modal -->
-  <div id="questsModal" class="modal hidden">
+  <div id="questsLifeModal" class="modal hidden">
     <div class="modal-backdrop"></div>
     <div class="modal-content">
-      <button id="closeQuestsModal" class="btn-ghost">← Back</button>
-      <div class="modal-body">
-        <div class="char-info">
-          <h3>Goals & Projects</h3>
-          <ul class="quests-list" id="questsList"></ul>
-        </div>
-      </div>
+      <button id="closeQuestsLifeModal" class="btn-ghost">Close</button>
+      <h2>Life Quests</h2>
+      <ul id="questsLifeList"></ul>
     </div>
   </div>
 
-  <!-- Script -->
+  <!-- JS Files -->
+  <script src="quests.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
