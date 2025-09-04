@@ -21,10 +21,33 @@
   <!-- Dashboard -->
   <div id="dashboard">
     <canvas id="particles"></canvas>
-    <div class="panel">🎭 Character</div>
+    <div class="panel" id="character-panel">🎭 Character</div>
     <div class="panel">⚔️ Stats</div>
     <div class="panel">🏆 Achievements</div>
     <div class="panel">📜 Quests</div>
+  </div>
+
+  <!-- Character Modal -->
+  <div id="character-modal" class="modal">
+    <div class="modal-content">
+      <h2>🎭 Character Sheet</h2>
+      <img src="https://i.ibb.co/r2zvQyM/avatar.png" alt="Avatar" class="avatar"/>
+      <p><strong>Class:</strong> Cyber Mage</p>
+      <p><strong>Level:</strong> 7</p>
+      <p><strong>XP:</strong> 1450 / 2000</p>
+
+      <div class="bar health">
+        <div class="fill" style="--percent: 75%"></div>
+      </div>
+      <p>Health: 75%</p>
+
+      <div class="bar mana">
+        <div class="fill" style="--percent: 50%"></div>
+      </div>
+      <p>Mana: 50%</p>
+
+      <button id="close-character">Back</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
