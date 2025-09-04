@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>RPG Profile</title>
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -19,9 +17,7 @@
   <section id="landing" class="screen center">
     <div class="landing-inner">
       <h1>Welcome to the RPG World</h1>
-      <button id="enterBtn" class="btn-primary" aria-label="Enter Game">
-        Enter Game
-      </button>
+      <button id="enterBtn" class="btn-primary" aria-label="Enter Game">Enter Game</button>
       <p class="hint">Press Enter ↵</p>
     </div>
   </section>
@@ -30,9 +26,9 @@
   <section id="terminal" class="screen hidden" aria-live="polite">
     <div class="terminal-inner">
       <div class="terminal-header">
-        <div class="dot red"></div>
-        <div class="dot yellow"></div>
-        <div class="dot green"></div>
+        <div class="dot red" aria-hidden="true"></div>
+        <div class="dot yellow" aria-hidden="true"></div>
+        <div class="dot green" aria-hidden="true"></div>
         <span class="term-title">/dev/profile – boot log</span>
       </div>
       <pre id="terminalOutput" class="terminal-output" aria-label="Boot Log"></pre>
@@ -40,11 +36,11 @@
   </section>
 
   <!-- Dashboard -->
-  <section id="dashboard" class="screen hidden">
+  <section id="dashboard" class="screen hidden" aria-label="Dashboard">
     <!-- Particle background (non-blocking) -->
     <canvas id="particles" class="particles" aria-hidden="true"></canvas>
 
-    <div class="grid">
+    <div class="grid" role="region" aria-label="Main panels">
       <article class="panel" data-panel="character" tabindex="0" aria-label="Open Character">
         <div class="panel-icon">🎭</div>
         <h2>Character</h2>
@@ -83,13 +79,13 @@
   </section>
 
   <!-- Character Modal -->
-  <div id="characterModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="charTitle">
-    <div class="modal-content">
+  <div id="characterModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="charTitle" aria-hidden="true">
+    <div class="modal-content" role="document">
       <button class="modal-close btn-ghost" id="closeModal" aria-label="Back">← Back</button>
 
       <div class="modal-body">
         <div class="avatar-wrap">
-          <!-- Replace src with your own avatar if you like -->
+          <!-- Replace with your avatar if desired -->
           <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=512&auto=format&fit=crop" alt="Character Avatar" class="avatar" />
         </div>
 
@@ -101,14 +97,14 @@
             <div class="bar-label">
               <span>Health</span><span id="hpVal">0%</span>
             </div>
-            <div class="bar-track"><div class="bar-fill hp"></div></div>
+            <div class="bar-track"><div class="bar-fill hp" style="width:0%"></div></div>
           </div>
 
           <div class="bar">
             <div class="bar-label">
               <span>Mana</span><span id="mpVal">0%</span>
             </div>
-            <div class="bar-track"><div class="bar-fill mp"></div></div>
+            <div class="bar-track"><div class="bar-fill mp" style="width:0%"></div></div>
           </div>
 
           <div class="stats-block">
@@ -123,9 +119,10 @@
       </div>
     </div>
     <!-- Backdrop -->
-    <div class="modal-backdrop"></div>
+    <div class="modal-backdrop" aria-hidden="true"></div>
   </div>
 
+  <!-- Script: placed at end so DOM is ready -->
   <script src="script.js"></script>
 </body>
 </html>

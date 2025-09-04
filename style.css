@@ -1,8 +1,9 @@
+
 /* -----------------------------------------------------------
    Global Styles
    - Fonts: Inter for UI, Chakra Petch for terminal/accents
    - Color scheme & glassmorphism variables
------------------------------------------------------------ */
+   ----------------------------------------------------------- */
 :root{
   --bg: #0b0f14;
   --fg: #e9f0ff;
@@ -27,7 +28,7 @@ html, body {
   background: radial-gradient(1200px 800px at 20% 10%, #0f1520 0%, #0b0f14 60%, #080a0f 100%);
   color: var(--fg);
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
 /* Utility */
@@ -141,7 +142,8 @@ html, body {
   width: min(1100px, 92vw);
   margin: 0 auto;
   padding-block: clamp(18px, 4vh, 42px);
-  animation: flickerIn 1000ms ease both 100ms;
+  /* corrected animation order: delay before fill-mode */
+  animation: flickerIn 1000ms ease 100ms both;
 }
 .panel{
   background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
