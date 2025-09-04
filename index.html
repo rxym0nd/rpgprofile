@@ -17,7 +17,6 @@
       <div class="cta">Press <span class="key">Enter</span> to Begin</div>
       <div class="small">Raymond — Age 23 — Kenya</div>
     </div>
-    <div class="glitch top-left"></div>
   </div>
 
   <!-- Dashboard -->
@@ -25,18 +24,12 @@
     <header class="hud">
       <div class="left">
         <div id="avatar" class="avatar">
-          <img src="data:image/svg+xml;utf8,
-            <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
-              <rect rx='20' width='100%' height='100%' fill='%23020b12'/>
-              <g transform='translate(20,20)'>
-                <circle cx='60' cy='50' r='30' fill='%2300aaff'/>
-                <rect x='20' y='100' width='80' height='20' rx='10' fill='%23ff9b3c'/>
-              </g>
-            </svg>" alt="avatar">
+          <img src="" id="avatar-img" alt="avatar">
         </div>
         <div class="name">
           <div class="title">Raymond</div>
           <div class="meta">Age 23 • Kenya</div>
+          <div class="motto">Renati ex Flammis</div>
         </div>
       </div>
 
@@ -55,17 +48,24 @@
         <button class="btn" data-open="skills-modal">Skills</button>
         <button class="btn" data-open="achievements-modal">Achievements</button>
         <button class="btn" data-open="quests-modal">Life Quests</button>
+        <button class="btn" id="private-toggle">Enter Private</button>
       </div>
     </header>
 
     <section class="content-grid">
       <div class="card large">
         <h2>Life Overview</h2>
-        <p class="flavor">Two ventures — Nexus Creations (Event Planning) &amp; NeoAfriTech (Software). Motto: <em>Renati ex Flammis</em></p>
+        <p class="flavor">Two ventures — Nexus Creations &amp; NeoAfriTech. Interests: coding, filmmaking, football, networking.</p>
         <div class="mini-stats">
           <div><strong id="total-xp">0</strong><small>XP</small></div>
           <div><strong id="completed-quests">0</strong><small>Quests Done</small></div>
           <div><strong id="level-display">1</strong><small>Level</small></div>
+        </div>
+
+        <div class="overview-actions" style="margin-top:12px;">
+          <button class="action" id="add-quest-btn">+ Add Quest</button>
+          <button class="action" id="export-btn">Export Quests</button>
+          <button class="action" id="import-btn">Import</button>
         </div>
       </div>
 
@@ -79,15 +79,17 @@
 
       <div class="card">
         <h3>Recent Achievements</h3>
-        <ul id="recent-achievements" class="ach-list">
-          <!-- filled by JS -->
-        </ul>
+        <ul id="recent-achievements" class="ach-list"></ul>
       </div>
 
       <div class="card">
-        <h3>Active Quests (Top 5)</h3>
-        <ul id="top-quests" class="quest-list small">
-        </ul>
+        <h3>Active Quests (Top 6)</h3>
+        <ul id="top-quests" class="quest-list small"></ul>
+      </div>
+
+      <div class="card wide-card">
+        <h3>All Quests</h3>
+        <div id="quests-grid" class="quests-grid"></div>
       </div>
     </section>
   </main>
@@ -122,9 +124,81 @@
       <div class="modal-body wide">
         <button class="close" data-close>&times;</button>
         <h2>Life Quests</h2>
-        <div class="quests-grid" id="quests-grid">
-          <!-- quests populated by JS -->
-        </div>
+        <div id="modal-quests-grid" class="quests-grid"></div>
+      </div>
+    </div>
+
+    <!-- Quest Editor -->
+    <div class="modal hidden" id="quest-editor-modal" aria-hidden="true">
+      <div class="modal-body">
+        <button class="close" data-close>&times;</button>
+        <h2 id="quest-editor-title">Add Quest</h2>
+        <form id="quest-form">
+          <label>
+            Title
+            <input type="text" id="quest-title" required placeholder="Eg. Launch MVP">
+          </label>
+          <label>
+            Category
+            <input type="text" id="quest-category" required placeholder="Business, Film, Travel...">
+          </label>
+          <label>
+            XP Reward
+            <input type="number" id="quest-xp" required min="0" placeholder="500">
+          </label>
+          <label class="row">
+            <input type="checkbox" id="quest-completed"> Completed
+            <input type="checkbox" id="quest-private" style="margin-left:12px"> Private (only visible to you)
+          </label>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="action" id="save-quest-btn" type="submit">Save</button>
+            <button class="action" id="cancel-quest-btn" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Private PIN Modal -->
+    <div class="modal hidden" id="pin-modal" aria-hidden="true">
+      <div class="modal-body">
+        <button class="close" data-close>&times;</button>
+        <h2 id="pin-title">Enter Private PIN</h2>
+        <form id="pin-form">
+          <label>
+            PIN
+            <input type="password" id="pin-input" placeholder="1234" required>
+          </label>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="action" id="pin-submit" type="submit">Enter</button>
+            <button class="action" id="open-pin-settings" type="button">Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Private Settings -->
+    <div class="modal hidden" id="pin-settings-modal" aria-hidden="true">
+      <div class="modal-body">
+        <button class="close" data-close>&times;</button>
+        <h2>Private Settings</h2>
+        <form id="pin-settings-form">
+          <label>
+            Current PIN (for confirmation)
+            <input type="password" id="current-pin" placeholder="current PIN">
+          </label>
+          <label>
+            New PIN
+            <input type="password" id="new-pin" placeholder="new PIN">
+          </label>
+          <label>
+            Confirm New PIN
+            <input type="password" id="new-pin-confirm" placeholder="confirm new PIN">
+          </label>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="action" id="change-pin-btn" type="submit">Change PIN</button>
+            <button class="action" id="disable-pin-btn" type="button">Disable Private Mode</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -136,6 +210,8 @@
       <div id="ap-text" class="ap-text"></div>
     </div>
   </div>
+
+  <input type="file" id="import-file" accept=".json" class="hidden">
 
   <script src="quests.js"></script>
   <script src="script.js"></script>
