@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           line.style.opacity = "1";
           line.style.animation = `typing 1.5s steps(30, end) forwards, blink .8s step-end infinite alternate`;
-
           setTimeout(() => line.classList.add("done"), 1500);
 
           if (index === lines.length - 1) {
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
               setTimeout(() => {
                 terminal.remove();
                 dashboard.style.display = "grid";
-                dashboard.style.position = "relative";
 
                 const panels = document.querySelectorAll(".panel");
                 panels.forEach((panel, i) => {
@@ -86,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   startBtn.addEventListener("click", startProfile);
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", e => {
     if (e.key === "Enter") startProfile();
   });
 
@@ -121,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
+  // Character Modal
   charPanel.addEventListener("click", () => {
     charModal.classList.add("active");
     document.querySelectorAll(".bar .fill").forEach(bar => {

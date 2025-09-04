@@ -78,8 +78,10 @@ body {
   z-index: 0;
 }
 
-/* Panels (Glassmorphism + Glow) */
+/* Panels */
 .panel {
+  position: relative;
+  z-index: 2;
   background: rgba(0, 255, 204, 0.1);
   border: 1px solid rgba(0, 255, 204, 0.5);
   border-radius: 16px;
@@ -91,7 +93,6 @@ body {
   transform: scale(0.9) rotateX(5deg);
   transition: all 0.6s ease;
   box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-  z-index: 2; /* above canvas */
 }
 .panel.flicker {
   opacity: 1;
@@ -156,7 +157,6 @@ body {
   overflow: hidden;
   margin: 10px 0;
   height: 20px;
-  position: relative;
 }
 .bar .fill {
   height: 100%;
@@ -170,7 +170,6 @@ body {
   background: linear-gradient(90deg, #3b3bff, #8080ff);
 }
 
-/* Close Button */
 #close-character {
   margin-top: 20px;
   padding: 10px 20px;
