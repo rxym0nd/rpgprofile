@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const charModal = document.getElementById("character-modal");
   const closeChar = document.getElementById("close-character");
 
+  /* Boot Messages */
   const messagePool = [
     "[BOOT] Initializing profile system...",
     "[OK] Loading character stats...",
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return [intro, ...shuffled.slice(0, 3), outro];
   }
 
+  /* Start sequence */
   function startProfile() {
     if (profile.classList.contains("active")) return;
 
@@ -44,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       landing.remove();
       profile.classList.add("active");
 
+      // Add boot messages
       const bootMessages = getBootMessages();
       bootMessages.forEach(msg => {
         const p = document.createElement("p");
@@ -54,12 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const lines = document.querySelectorAll(".line");
 
+      // Animate lines sequentially
       lines.forEach((line, index) => {
         setTimeout(() => {
           line.style.opacity = "1";
           line.style.animation = `typing 1.5s steps(30, end) forwards, blink .8s step-end infinite alternate`;
+
           setTimeout(() => line.classList.add("done"), 1500);
 
+          // When last line finishes
           if (index === lines.length - 1) {
             setTimeout(() => {
               terminal.style.transition = "opacity 1s ease";
@@ -67,14 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
               setTimeout(() => {
                 terminal.remove();
+
+                // Show dashboard before initializing canvas
                 dashboard.style.display = "grid";
+
+                initParticles(); // canvas now has proper size
 
                 const panels = document.querySelectorAll(".panel");
                 panels.forEach((panel, i) => {
                   setTimeout(() => panel.classList.add("flicker"), i * 300);
                 });
-
-                initParticles();
               }, 1000);
             }, 2000);
           }
@@ -84,11 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   startBtn.addEventListener("click", startProfile);
-  document.addEventListener("keydown", e => {
+  document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") startProfile();
   });
 
+  /* Particle Background */
   function initParticles() {
+    canvas.style.position = "absolute";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -119,9 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   }
 
-  // Character Modal
+  /* Character Modal Logic */
   charPanel.addEventListener("click", () => {
     charModal.classList.add("active");
+
+    // animate bars filling
     document.querySelectorAll(".bar .fill").forEach(bar => {
       const percent = bar.style.getPropertyValue("--percent");
       bar.style.width = percent;
@@ -130,6 +144,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeChar.addEventListener("click", () => {
     charModal.classList.remove("active");
-    document.querySelectorAll(".bar .fill").forEach(bar => bar.style.width = "0");
+
+    // reset bars
+    document.querySelectorAll(".bar .fill").forEach(bar => {
+      bar.style.width = "0";
+    });
+  });
+
+  /* Handle window resize for canvas */
+  window.addEventListener("resize", () => {
+    if (dashboard.style.display === "grid") {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
   });
 });
