@@ -1,60 +1,69 @@
+/* General setup */
 body {
   margin: 0;
-  font-family: 'Orbitron', sans-serif;
+  padding: 0;
+  font-family: monospace;
   background: black;
   color: #0ff;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 /* Landing screen */
 #landing {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: black;
-  color: #0ff;
-  animation: flicker 2s infinite alternate;
-  z-index: 999;
+  text-align: center;
 }
-
+#landing h1 {
+  margin-bottom: 20px;
+}
 #start-btn {
-  margin-top: 20px;
-  padding: 12px 24px;
-  background: none;
-  border: 2px solid #0ff;
-  color: #0ff;
-  font-size: 1.2rem;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #0ff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s;
 }
 #start-btn:hover {
-  background: #0ff;
-  color: black;
-  box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+  background: #0cc;
 }
 
-/* Profile (hidden initially) */
+/* Profile screen */
 #profile {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 1s ease;
+  display: none;
+  width: 80%;
+  max-width: 600px;
 }
 #profile.active {
-  opacity: 1;
-  transform: translateY(0);
+  display: block;
 }
 
-/* Flicker animation */
-@keyframes flicker {
-  0% { opacity: 1; }
-  45% { opacity: 0.8; }
-  50% { opacity: 0.4; }
-  55% { opacity: 0.9; }
-  60% { opacity: 0.3; }
-  65% { opacity: 1; }
-  100% { opacity: 1; }
+/* Terminal text lines */
+.line {
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #0ff; /* typing cursor */
+  width: 0;
+  display: inline-block;
+}
+
+/* Typing animation */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Blinking cursor while typing */
+@keyframes blink {
+  0%, 50% { border-color: #0ff; }
+  51%, 100% { border-color: transparent; }
+}
+
+/* Remove cursor once line is done */
+.line.done {
+  border-right: none;
 }
