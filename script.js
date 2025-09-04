@@ -3,17 +3,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const landing = document.getElementById("landing");
   const profile = document.getElementById("profile");
   const terminal = document.getElementById("terminal");
+  const dashboard = document.getElementById("dashboard");
 
-  // 🔹 Boot-up messages (edit these easily!)
-  const bootMessages = [
+  // 🔹 Boot-up messages
+  const messagePool = [
     "[BOOT] Initializing profile system...",
     "[OK] Loading character stats...",
     "[OK] Accessing achievements...",
     "[OK] Preparing display...",
-    "[READY] Welcome, Raymond."
+    "[OK] Verifying save files...",
+    "[OK] Running diagnostics...",
+    "[OK] Establishing neural link...",
+    "[WARN] Low mana detected, replenishing...",
+    "[OK] Network sync complete."
   ];
 
-  // Create line elements dynamically
+  function getTimestamp() {
+    const now = new Date();
+    const date = now.toISOString().split("T")[0]; // YYYY-MM-DD
+    const time = now.toTimeString().split(" ")[0]; // HH:MM:SS
+    return `${date} ${time}`;
+  }
+
+  function getBootMessages() {
+    const intro = "[BOOT] Initializing profile system...";
+    const outro = `[READY] Welcome, Raymond. System boot at ${getTimestamp()}`;
+    const shuffled = messagePool
+      .filter(msg => msg !== intro)
+      .sort(() => Math.random() - 0.5);
+    const middle = shuffled.slice(0, 3);
+    return [intro, ...middle, outro];
+  }
+
+  // Create boot-up lines dynamically
+  const bootMessages = getBootMessages();
   bootMessages.forEach(msg => {
     const p = document.createElement("p");
     p.classList.add("line");
@@ -29,31 +52,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fade out landing
     landing.style.opacity = "0";
     landing.style.transition = "opacity 1s ease";
+
     setTimeout(() => {
       landing.remove();
       profile.classList.add("active");
 
       // Animate lines one by one
       let delay = 500;
-      lines.forEach((line) => {
+      lines.forEach((line, index) => {
         setTimeout(() => {
           line.style.opacity = "1";
           line.style.animation = `typing 1.5s steps(30, end) forwards, blink .8s step-end infinite alternate`;
 
-          // Remove cursor after typing finishes
+          // Stop blinking cursor after typing finishes
           setTimeout(() => {
             line.classList.add("done");
           }, 1500);
+
+          // When last line finishes -> fade out terminal, flicker in dashboard
+          if (index === lines.length - 1) {
+            setTimeout(() => {
+              terminal.style.transition = "opacity 1s ease";
+              terminal.style.opacity = "0";
+
+              setTimeout(() => {
+                terminal.remove();
+                dashboard.style.display = "grid"; // show grid
+
+                // Animate each panel with flicker
+                const panels = document.querySelectorAll(".panel");
+                panels.forEach((panel, i) => {
+                  setTimeout(() => {
+                    panel.classList.add("flicker");
+                  }, i * 300); // stagger for cooler effect
+                });
+              }, 1000);
+            }, 1800);
+          }
         }, delay);
         delay += 1800;
       });
     }, 1000);
   }
 
-  // Trigger by button
+  // Button + Enter trigger
   startBtn.addEventListener("click", startProfile);
-
-  // Trigger by Enter key
   document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") startProfile();
   });

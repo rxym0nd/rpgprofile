@@ -67,3 +67,82 @@ body {
 .line.done {
   border-right: none;
 }
+
+/* Dashboard Layout */
+#dashboard {
+  display: none; /* hidden until boot finishes */
+  width: 90%;
+  height: 90%;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 per row */
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Panels */
+.panel {
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #00ff99;
+  border-radius: 10px;
+  padding: 15px;
+  color: #00ff99;
+  font-family: monospace;
+  overflow: auto;
+  opacity: 0; /* hidden until flicker anim */
+}
+
+/* Panel Titles */
+.panel h2 {
+  margin-top: 0;
+  color: #fff;
+  border-bottom: 1px solid #00ff99;
+  padding-bottom: 5px;
+}
+
+/* Avatar placeholder */
+.avatar {
+  width: 80px;
+  height: 80px;
+  background: #00ff99;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* XP bar */
+.xp-bar {
+  width: 100%;
+  height: 10px;
+  background: #333;
+  border: 1px solid #00ff99;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+.xp-fill {
+  width: 40%; /* starting point */
+  height: 100%;
+  background: #00ff99;
+  border-radius: 5px;
+}
+
+/* Flicker animation */
+@keyframes crtFlicker {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  20%  { opacity: 0.3; }
+  30%  { opacity: 1; }
+  40%  { opacity: 0.6; }
+  50%  { opacity: 1; }
+  60%  { opacity: 0.4; }
+  70%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.flicker {
+  animation: crtFlicker 1s linear forwards;
+}
+
+#dashboard {
+  display: none; /* hidden until boot finishes */
+}
